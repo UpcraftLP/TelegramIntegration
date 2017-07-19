@@ -1,8 +1,8 @@
 ![](https://telegram.org/img/t_logo.png)
-# TelegramIntegration | [CurseForge](https://minecraft.curseforge.com/projects/telegram-integration)
+# TelegramIntegration
 A Minecraft mod for relaying various messages to Telegram chats
 
-
+#### [Downloads](https://minecraft.curseforge.com/projects/telegram-integration)
 ---
 # Currently supported Minecraft Versions:
   - [x] 1.12
