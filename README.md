@@ -1,5 +1,5 @@
 ![](https://telegram.org/img/t_logo.png)
-# TelegramIntegration 
+# TelegramIntegration | [CurseForge](https://minecraft.curseforge.com/projects/telegram-integration)
 A Minecraft mod for relaying various messages to Telegram chats
 
 
