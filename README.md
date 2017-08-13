@@ -11,7 +11,7 @@ A Minecraft mod for relaying various messages to Telegram chats
   - [x] 1.9.4
   - [x] 1.8.9
   - [x] 1.8
-  - [ ] 1.7.10
+  - [x] 1.7.10
 ---
 
 
