@@ -1,0 +1,122 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+//Only edit below this line, the above code adds and enables the nessasary things for Forge to be setup.
+
+def username = "${mod_name}"
+if (project.hasProperty('dev_mail')) {
+    username = "${dev_mail}"
+}
+else if(project.hasProperty('dev_username')) {
+    username = "${dev_username}"
+}
+
+version = "${project.mc_version}-${project.mod_version}"
+group= project.base_package // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+//noinspection GroovyUnusedAssignment
+archivesBaseName = project.mod_name
+
+sourceCompatibility = targetCompatibility = project.jvm_version // Need this here so eclipse task generates correctly.
+compileJava {
+    sourceCompatibility = targetCompatibility = project.jvm_version
+}
+
+repositories {
+    maven {
+        //JEI files
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "http://modmaven.k-4u.nl"
+    }
+
+    maven {
+        //fallback for almost everything, this is CurseForge :P
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
+
+}
+
+minecraft {
+    version = "${project.mc_version}-${project.forge_version}"
+    if(file('../run').exists()) {
+		runDir = "../run"
+	}
+	else
+	{
+		runDir = "run"
+	}
+    
+    mappings = project.forge_mappings
+    makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+	
+	replace "@VERSION@", project.mod_version
+    replaceIn "Reference.java"
+
+    //auto-configure the run arguments
+    clientRunArgs += "--username=${username}"
+    if(project.hasProperty('dev_password')) {
+        clientRunArgs += " --password=${dev_password}"
+    }
+    serverRunArgs += "nogui" //mc server GUIs suck :P
+	serverJvmArgs += "-Dfml.queryResult=confirm" //skips the /fml confirm part
+}
+
+sourceSets {
+
+	main {
+		java {
+			srcDir 'src/main/java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+}
+
+dependencies {
+
+    // at runtime, use the full JEI jar
+    runtime "mezz.jei:jei_${project.mc_version}:${project.jei_version}"
+
+}
+
+jar {
+
+	manifest {
+	    //attributes 'FMLAT': "${project.mod_name}_at.cfg"
+	}
+}
+
+processResources
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+	
+	//ATs
+	rename '(.+_at.cfg)', 'META-INF/$1'
+}

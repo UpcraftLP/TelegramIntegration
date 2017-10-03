@@ -1,0 +1,16 @@
+[
+{
+  "modid": "telegramintegration",
+  "name": "Telegram Integration",
+  "description": "Telegram Integration for Minecraft 1.12",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "https://github.com/UpcraftLP/",
+  "updateUrl": "https://github.com/UpcraftLP/",
+  "authorList": ["UpcraftLP"],
+  "credits": "(C)2017 UpcraftLP",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["required-after:forge@[14.21.1.2387,)"]
+}
+]
